@@ -6,7 +6,7 @@ import {
   MatButtonModule,
   MatCardModule,
   MatGridListModule,
-  MatListModule, MatSelectModule, MatSlideToggleModule,
+  MatListModule, MatProgressSpinnerModule, MatSelectModule, MatSlideToggleModule,
   MatToolbarModule
 } from '@angular/material';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -59,6 +59,7 @@ import {LoginComponent} from './login/login.component';
 
     MatSelectModule,
     MatSlideToggleModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
 
     FlexLayoutModule,
