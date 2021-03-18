@@ -3,11 +3,11 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {
-  MatButtonModule,
-  MatCardModule,
-  MatGridListModule,
-  MatListModule, MatProgressSpinnerModule, MatSelectModule, MatSlideToggleModule,
-  MatToolbarModule
+    MatButtonModule,
+    MatCardModule,
+    MatGridListModule,
+    MatListModule, MatProgressSpinnerModule, MatSelectModule, MatSliderModule, MatSlideToggleModule,
+    MatToolbarModule
 } from '@angular/material';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -42,29 +42,30 @@ import {LoginComponent} from './login/login.component';
     ContactComponent,
     LoginComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatListModule,
-    MatGridListModule,
-    MatCardModule,
-    MatButtonModule,
-    MatDialogModule,
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatListModule,
+        MatGridListModule,
+        MatCardModule,
+        MatButtonModule,
+        MatDialogModule,
 
-    MatFormFieldModule,
-    MatInputModule,
-    MatCheckboxModule,
-    FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCheckboxModule,
+        FormsModule,
 
-    MatSelectModule,
-    MatSlideToggleModule,
-    MatProgressSpinnerModule,
-    ReactiveFormsModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatProgressSpinnerModule,
+        ReactiveFormsModule,
 
-    FlexLayoutModule,
-    AppRoutingModule
-  ],
+        FlexLayoutModule,
+        AppRoutingModule,
+        MatSliderModule
+    ],
   entryComponents: [
     LoginComponent
   ],
