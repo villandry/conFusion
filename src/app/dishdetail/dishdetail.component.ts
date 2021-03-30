@@ -40,6 +40,7 @@ export class DishdetailComponent implements OnInit {
       'required': 'Comment is required.'
     }
   };
+  errMsg: string;
 
   constructor(private dishservice: DishService,
               private route: ActivatedRoute,
@@ -47,10 +48,10 @@ export class DishdetailComponent implements OnInit {
               private fb: FormBuilder,
               @Inject('BaseURL') private BaseURL) {
     this.createForm();
-    this.commentForm.valueChanges.subscribe(data => this.onValueChanged(data));
+    this.commentForm.valueChanges.subscribe(data => this.onValueChanged(data), errMsg => this.errMsg = errMsg);
     this.ratingControl.valueChanges.subscribe(value => {
       this.commentForm.controls['rating'].setValue(value);
-    });
+    }, errMsg => this.errMsg = errMsg);
     this.onValueChanged();
   }
 
@@ -78,7 +79,7 @@ export class DishdetailComponent implements OnInit {
 
   ngOnInit() {
     // this.http.get<Dish>(baseURL + 'dishes/' + id);
-    this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
+    this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds, errMsg => this.errMsg = errMsg );
     this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
       .subscribe(dish => {
         this.dish = dish;
