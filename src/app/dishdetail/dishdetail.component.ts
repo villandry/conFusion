@@ -16,6 +16,7 @@ import {baseURL} from '../shared/baseurl';
 export class DishdetailComponent implements OnInit {
 
   dish: Dish;
+  dishcopy: Dish;
   dishIds: string[];
   prev: string;
   next: string;
@@ -79,12 +80,15 @@ export class DishdetailComponent implements OnInit {
 
   ngOnInit() {
     // this.http.get<Dish>(baseURL + 'dishes/' + id);
-    this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds, errMsg => this.errMsg = errMsg );
-    this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
+    this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds, errMsg => this.errMsg = errMsg);
+    this.route.params
+      .pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
       .subscribe(dish => {
-        this.dish = dish;
-        this.setPrevNext(dish.id);
-      });
+          this.dish = dish;
+          this.dishcopy = dish;
+          this.setPrevNext(dish.id);
+        },
+        errMsg => this.errMsg = errMsg);
 
   }
 
@@ -112,6 +116,16 @@ export class DishdetailComponent implements OnInit {
     this.newComment = this.commentForm.value;
     this.newComment.date = String(new Date());
     this.dish.comments.push(this.newComment);
+    this.dishservice.putDish(this.dishcopy)
+      .subscribe(dish => {
+          this.dish = dish;
+          this.dishcopy = dish;
+        },
+        errmess => {
+          this.dish = null;
+          this.dishcopy = null;
+          this.errMsg = errmess;
+        });
 
     this.commentForm.reset({
       author: '',
