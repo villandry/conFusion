@@ -73,7 +73,7 @@
 
     <mat-grid-list cols="1" rowHeight="100px">
       <mat-grid-tile *ngFor="let leader of leaders">
-        <img class="mat-icon-button" src={{leader.image}} alt={{leader.name}} >
+        <img class="mat-icon-button" src="{{ BaseURL + leader.image}}" alt={{leader.name}} >
         <div fxFlexOffset="20px">
           <p matLine > <span style="padding-right:5px;">{{leader.name}}</span>
             <span>{{leader.abbr}}</span>

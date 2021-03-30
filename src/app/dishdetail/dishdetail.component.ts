@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {Dish} from '../shared/dish';
 import {Comment} from '../shared/comment';
 import {DishService} from '../services/dish.service';
@@ -6,6 +6,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {Location} from '@angular/common';
 import {switchMap} from 'rxjs/operators';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {baseURL} from '../shared/baseurl';
 
 @Component({
   selector: 'app-dishdetail',
@@ -43,7 +44,8 @@ export class DishdetailComponent implements OnInit {
   constructor(private dishservice: DishService,
               private route: ActivatedRoute,
               private location: Location,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              @Inject('BaseURL') private BaseURL) {
     this.createForm();
     this.commentForm.valueChanges.subscribe(data => this.onValueChanged(data));
     this.ratingControl.valueChanges.subscribe(value => {
@@ -75,6 +77,7 @@ export class DishdetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.http.get<Dish>(baseURL + 'dishes/' + id);
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
     this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
       .subscribe(dish => {
