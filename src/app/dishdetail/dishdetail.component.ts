@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {Dish} from '../shared/dish';
 import {Comment} from '../shared/comment';
 import {DishService} from '../services/dish.service';
@@ -6,23 +6,16 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {Location} from '@angular/common';
 import {switchMap} from 'rxjs/operators';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {trigger, state, style, animate, transition} from '@angular/animations';
+import {expand, visibility} from '../animations/app.animation';
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
   styleUrls: ['./dishdetail.component.scss'],
-  animations: [ trigger('visibility', [
-    state('shown', style({
-      transform: 'scale(1.0)',
-      opacity: 1
-    })),
-    state('hidden', style({
-      transform: 'scale(0.5)',
-      opacity: 0
-    })),
-    transition('* => *', animate('0.5s ease-in-out'))
-  ])]
+  animations: [
+    visibility(),
+    expand()
+  ]
 })
 export class DishdetailComponent implements OnInit {
 
@@ -92,8 +85,16 @@ export class DishdetailComponent implements OnInit {
 
   ngOnInit() {
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds, errMsg => this.errMsg = errMsg);
-    this.route.params.pipe(switchMap((params: Params) => { this.visibility = 'hidden'; return this.dishservice.getDish(+params['id']); }))
-      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); this.visibility = 'shown'; },
+    this.route.params.pipe(switchMap((params: Params) => {
+      this.visibility = 'hidden';
+      return this.dishservice.getDish(+params['id']);
+    }))
+      .subscribe(dish => {
+          this.dish = dish;
+          this.dishcopy = dish;
+          this.setPrevNext(dish.id);
+          this.visibility = 'shown';
+        },
         errMsg => this.errMsg = errMsg);
 
   }
